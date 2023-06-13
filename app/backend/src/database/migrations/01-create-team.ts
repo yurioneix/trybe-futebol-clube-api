@@ -3,7 +3,7 @@ import ITeam from '../../Interfaces/ITeam';
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<ITeam >>('trybe_eval', {
+    return queryInterface.createTable<Model<ITeam >>('teams', {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -17,6 +17,6 @@ export default {
     });
   },
   down(queryInterface: QueryInterface) {
-    return queryInterface.dropTable('trybe_eval');
+    return queryInterface.dropTable('teams');
   },
 };
