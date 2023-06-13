@@ -1,4 +1,4 @@
 export default interface ITeam {
-    id: number,
-    team_name: string,
+  id: number,
+  team_name: string,
 }

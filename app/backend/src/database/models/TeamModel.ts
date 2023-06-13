@@ -11,7 +11,7 @@ import db from '.';
 class TeamModel extends Model<InferAttributes<TeamModel>,
 InferCreationAttributes<TeamModel>> {
   declare id: CreationOptional<number>;
-  declare teamName: CreationOptional<string>
+  declare team_name: CreationOptional<string>;
 }
 
 TeamModel.init({
@@ -21,10 +21,10 @@ TeamModel.init({
     primaryKey: true,
     autoIncrement: true,
   },
-  teamName: {
+  team_name: {
     type: DataTypes.STRING, 
     allowNull: false,
-  }
+  },
 }, {
   sequelize: db,
   modelName: 'trybeEval',
