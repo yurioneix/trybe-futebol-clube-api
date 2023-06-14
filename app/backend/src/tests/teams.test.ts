@@ -41,7 +41,7 @@ describe('GET /teams/:id', () => {
     const { status, body } = await chai.request(app).get('/teams/50');
 
     expect(status).to.equal(404);
-    expect(body).to.be.deep.equal('Team 50 not found');
+    expect(body).to.be.deep.equal({ message: 'Team 50 not found'});
   });
 
   afterEach(sinon.restore);

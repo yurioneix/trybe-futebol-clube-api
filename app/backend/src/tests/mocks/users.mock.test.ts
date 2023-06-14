@@ -7,7 +7,7 @@ const userRegistered = {
 }
 
 const userWithoutPassword = {
-    username: 'Admin',
+    email: 'admin@admin.com',
 }
 
 const userWithoutEmail = {
@@ -15,19 +15,25 @@ const userWithoutEmail = {
 }
 
 const wrongPassUser = {
-    username: 'Admin',
+    email: 'admin@admin.com',
     password: 'framengo'
 }
 
-const validLoginBody = {
-    username: 'Admin',
+const validAndRegisteredUser = {
+    email: 'admin@admin.com',
     password: 'secret_admin'
+}
+
+const unauthorizedUser = {
+    email: 'germancano@email.com',
+    password: 'fluminensecampeaodalibertadores2023'
 }
 
 export {
     userRegistered,
     userWithoutPassword,
     wrongPassUser,
-    validLoginBody,
-    userWithoutEmail
+    validAndRegisteredUser,
+    userWithoutEmail,
+    unauthorizedUser
 }
