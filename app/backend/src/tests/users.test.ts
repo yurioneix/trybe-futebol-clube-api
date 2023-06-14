@@ -24,8 +24,6 @@ describe('POST /login', function () {
   });
 
   it('Ao realizar login com apenas o email informados, retorna uma mensagem de erro', async function () {
-    // const userMock = UserModel.build(userRegistered);
-    // sinon.stub(UserModel, 'findOne').resolves(userMock);
 
     const response = await chai.request(app).post('/login').send(userWithoutEmail);
 

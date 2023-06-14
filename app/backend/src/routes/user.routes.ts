@@ -12,6 +12,11 @@ const userController = new UsersController(userService);
 
 const router = Router();
 
-router.post('/', Validations.validateLogin, (req, res) => userController.login(req, res));
+router.post(
+  '/',
+  Validations.validateBody,
+  Validations.validateEmailAndPassword,
+  (req, res) => userController.login(req, res),
+);
 
 export default router;
