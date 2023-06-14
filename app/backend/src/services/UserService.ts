@@ -10,11 +10,10 @@ export default class UserService {
     private tokenGenerator: TokenGeneratorJwt,
   ) {}
 
-  public async login(email: string, password: string): Promise<ServiceResponse<{ token: string }>> {
-    if (!email || !password) {
-      return { status: 'INVALID_DATA', data: { message: 'All fields must be filled' } };
-    }
-
+  public async login(
+    email: string,
+    password: string,
+  ): Promise<ServiceResponse<{ token: string }>> {
     const user = await this.userModel.findOne({
       where: { email },
     });
