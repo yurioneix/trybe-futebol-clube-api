@@ -49,4 +49,8 @@ const teams = [
     },
   ]
 
-export default { teams }
+const cruzeiro = {
+  id: 5,
+  teamName: "Cruzeiro"
+}
+export { teams, cruzeiro }
