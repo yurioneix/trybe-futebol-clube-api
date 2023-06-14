@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import UserModel from '../database/models/UserModel';
-import { userRegistered, userWithoutPassword, userWithoutEmail, validAndRegisteredUser, unauthorizedUser } from './mocks/users.mock.test';
+import { userRegistered, userWithoutPassword, userWithoutEmail, validAndRegisteredUser, unauthorizedEmail, unauthorizedPassword } from './mocks/users.mock.test';
 
 
 chai.use(chaiHttp);
@@ -24,8 +24,8 @@ describe('POST /login', function () {
   });
 
   it('Ao realizar login com apenas o email informados, retorna uma mensagem de erro', async function () {
-    const userMock = UserModel.build(userRegistered);
-    sinon.stub(UserModel, 'findOne').resolves(userMock);
+    // const userMock = UserModel.build(userRegistered);
+    // sinon.stub(UserModel, 'findOne').resolves(userMock);
 
     const response = await chai.request(app).post('/login').send(userWithoutEmail);
 
@@ -34,7 +34,6 @@ describe('POST /login', function () {
   });
 
   it('Ao realizar login com apenas o password informados, retorna uma mensagem de erro', async function () {
-    sinon.stub(UserModel, 'findOne').resolves(null);
 
     const response = await chai.request(app).post('/login').send(userWithoutPassword);
 
@@ -42,10 +41,19 @@ describe('POST /login', function () {
     expect(response.body).to.be.deep.equal({ message: "All fields must be filled" })
   });
 
-  it('Ao realizar login com email e password válidos porém não cadastrados no banco, retorna um erro', async function () {
+  it('Ao realizar login com email não cadastrado no banco, retorna um erro', async function () {
     sinon.stub(UserModel, 'findOne').resolves(null);
 
-    const response = await chai.request(app).post('/login').send(unauthorizedUser);
+    const response = await chai.request(app).post('/login').send(unauthorizedEmail);
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.deep.equal(  { message: "Invalid email or password" });
+  });
+
+  it('Ao realizar login com password não cadastrado no banco, retorna um erro', async function () {
+    sinon.stub(UserModel, 'findOne').resolves(null);
+
+    const response = await chai.request(app).post('/login').send(unauthorizedPassword);
 
     expect(response.status).to.be.equal(401);
     expect(response.body).to.be.deep.equal(  { message: "Invalid email or password" });

@@ -24,9 +24,14 @@ const validAndRegisteredUser = {
     password: 'secret_admin'
 }
 
-const unauthorizedUser = {
+const unauthorizedEmail = {
     email: 'germancano@email.com',
-    password: 'fluminensecampeaodalibertadores2023'
+    password: 'secret_admin'
+}
+
+const unauthorizedPassword = {
+    email: 'admin@admin.com',
+    password: 'flucampeaoliberta2023'
 }
 
 export {
@@ -35,5 +40,6 @@ export {
     wrongPassUser,
     validAndRegisteredUser,
     userWithoutEmail,
-    unauthorizedUser
+    unauthorizedEmail,
+    unauthorizedPassword
 }
