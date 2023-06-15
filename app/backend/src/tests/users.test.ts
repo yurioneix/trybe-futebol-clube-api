@@ -59,3 +59,9 @@ describe('POST /login', function () {
 
   afterEach(sinon.restore);
 });
+
+// describe('GET /login/role', function () {
+//   it('Ao bater na rota com um token válido, retorna a role do user', async function () {
+//     sinon.stub(UserModel, 'find')
+//   });
+// });
