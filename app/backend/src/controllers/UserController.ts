@@ -21,7 +21,7 @@ export default class UserController {
   public async getRole(req: Request, res: Response) {
     const token = req.headers.authorization;
 
-    if (!token) { return res.status(404).json({ message: 'Token not found' }); }
+    if (!token) { return res.status(401).json({ message: 'Token not found' }); }
 
     const serviceResponse = await this.userService.getRole(token);
 
