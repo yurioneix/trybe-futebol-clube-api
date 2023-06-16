@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import MatchModel from '../database/models/MatchModel';
-import { allMatches } from './mocks/matches.mock.test';
+import { allMatches, inProgressMatches } from './mocks/matches.mock.test';
 
 chai.use(chaiHttp);
 
@@ -20,4 +20,15 @@ describe('GET /matches', function () {
     expect(status).to.be.equal(200);
     expect(body).to.be.deep.equal(allMatches);
   });
+
+  it('Ao utilizar a query string matches?inProgress=true, retorna apenas as partidas em progresso', async function () {
+    sinon.stub(MatchModel, 'findAll').resolves(inProgressMatches as any);
+
+    const { status, body } = await chai.request(app).get('/matches?inProgress=true');
+
+    expect(status).to.be.equal(200);
+    expect(body).to.be.deep.equal(inProgressMatches);
+  });
+
+  afterEach(sinon.restore);
 });

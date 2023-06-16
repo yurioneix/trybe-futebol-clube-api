@@ -6,9 +6,17 @@ export default class MatchController {
     private matchService: MatchService,
   ) {}
 
-  public async getMatches(req: Request, res: Response) {
-    const serviceResponse = await this.matchService.findAll();
+  public async getInProgressMatches(req: Request, res: Response) {
+    const { inProgress } = req.query;
 
+    if (inProgress === undefined) {
+      const serviceResponse = await this.matchService.findAll();
+
+      return res.status(200).json(serviceResponse.data);
+    }
+    const serviceResponse = await this.matchService
+      .getInProgressMatches(inProgress as string);
+    console.log(serviceResponse);
     return res.status(200).json(serviceResponse.data);
   }
 }
