@@ -26,7 +26,7 @@ export default class UserController {
     const serviceResponse = await this.userService.getRole(token);
 
     if (serviceResponse.status !== 'SUCCESSFUL') {
-      return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
+      return res.status(401).json({ message: 'User not found' });
     }
 
     const { data: { role } } = serviceResponse;

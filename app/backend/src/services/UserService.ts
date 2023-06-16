@@ -38,7 +38,6 @@ export default class UserService {
 
   public async getRole(token: string): Promise<ServiceResponse<{ role: string }>> {
     const decodedToken = this.jwt.verify(token) as JwtPayload | null;
-    console.log(decodedToken);
 
     if (!decodedToken) {
       return { status: 'NOT_FOUND', data: { message: 'User not found' } };
