@@ -50,7 +50,7 @@ MatchModel.init({
   },
 }, {
   sequelize: db,
-  modelName: 'trybeEval',
+  modelName: 'matches',
   timestamps: false,
   underscored: true,
 });
