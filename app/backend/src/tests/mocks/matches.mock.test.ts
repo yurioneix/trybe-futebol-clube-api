@@ -1014,8 +1014,28 @@ const finishedMatches = [
     }
   }
 ]
+
+const newMatch = {
+  id: 49,
+  homeTeamId: 16,
+  awayTeamId: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+  inProgress: true
+}
+
+const equalTeamsMatch = {
+  id: 49,
+  homeTeamId: 16,
+  awayTeamId: 16,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+  inProgress: true
+}
 export { 
     allMatches,
     inProgressMatches,
-    finishedMatches
+    finishedMatches,
+    newMatch,
+    equalTeamsMatch
 }

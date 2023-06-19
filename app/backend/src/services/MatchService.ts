@@ -67,4 +67,28 @@ export default class MatchService {
       },
     );
   }
+
+  public async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<ServiceResponse<IMatch>> {
+    const findHomeTeam = await this.matchModel.findByPk(homeTeamId);
+    const findAwayTeam = await this.matchModel.findByPk(awayTeamId);
+
+    if (!findHomeTeam || !findAwayTeam) {
+      return { status: 'NOT_FOUND', data: { message: 'There is no team with such id!' } };
+    }
+
+    const newMatch = await this.matchModel.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    });
+
+    return { status: 'SUCCESSFUL', data: newMatch };
+  }
 }
