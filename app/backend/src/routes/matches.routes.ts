@@ -11,6 +11,12 @@ const router = Router();
 router.get('/', (req: Request, res: Response) => matchController.getInProgressMatches(req, res));
 
 router.patch(
+  '/:id',
+  Validations.validateToken,
+  (req: Request, res: Response) => matchController.updateMatch(req, res),
+);
+
+router.patch(
   '/:id/finish',
   Validations.validateToken,
   (req: Request, res: Response) => matchController.finishMatch(req, res),

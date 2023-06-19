@@ -46,4 +46,25 @@ describe('PATCH /matches/:id/finish', function () {
       message: "Finished"
     })
   });
+
+  afterEach(sinon.restore);
+});
+
+describe('PATCH /matches/:id', function () {
+  it('Verifica se é possível atualizar o placar de uma partida', async function () {
+    sinon.stub(MatchModel, 'update').resolves([1]);
+    sinon.stub(jwt, 'verify').returns({id: 1, role: 'admin'} as any);
+
+    const { status, body } = await chai.request(app).patch('/matches/2').send({
+      "homeTeamGoals": 3,
+      "awayTeamGoals": 1
+    }).set('Authorization', 'token');
+
+    expect(status).to.be.equal(200);
+    expect(body).to.be.deep.equal(
+      "Partida atualizada com sucesso"
+    )
+  })
+
+  afterEach(sinon.restore);
 });

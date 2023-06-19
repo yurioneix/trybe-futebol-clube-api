@@ -44,12 +44,27 @@ export default class MatchService {
   }
 
   public async finishMatch(id: number): Promise<ServiceResponse<{ message: string }>> {
-    const response = await this.matchModel.update({
+    await this.matchModel.update({
       inProgress: false,
     }, {
       where: { id },
     });
-    console.log(response);
     return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
+  }
+
+  public async updateMatch(
+    id: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<void> {
+    await this.matchModel.update(
+      {
+        homeTeamGoals,
+        awayTeamGoals,
+      },
+      {
+        where: { id },
+      },
+    );
   }
 }

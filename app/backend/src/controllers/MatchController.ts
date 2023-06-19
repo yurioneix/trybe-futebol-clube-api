@@ -27,4 +27,17 @@ export default class MatchController {
 
     return res.status(200).json(serviceResponse.data);
   }
+
+  public async updateMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+
+    await this.matchService.updateMatch(
+      Number(id),
+      homeTeamGoals,
+      awayTeamGoals,
+    );
+
+    return res.status(200).json('Partida atualizada com sucesso');
+  }
 }
