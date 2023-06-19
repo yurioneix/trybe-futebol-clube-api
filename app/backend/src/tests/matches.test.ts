@@ -1,5 +1,6 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
+import * as jwt from 'jsonwebtoken';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
@@ -31,4 +32,18 @@ describe('GET /matches', function () {
   });
 
   afterEach(sinon.restore);
+});
+
+describe('PATCH /matches/:id/finish', function () {
+  it('Verifica se é possível atualizar uma partida', async function () {
+    sinon.stub(MatchModel, 'update').resolves([0]);
+    sinon.stub(jwt, 'verify').returns({id: 1, role: 'admin'} as any);
+
+    const { status, body } = await chai.request(app).patch('/matches/46/finish').set('Authorization', 'token');
+
+    expect(status).to.be.equal(200);
+    expect(body).to.be.deep.equal({
+      message: "Finished"
+    })
+  });
 });

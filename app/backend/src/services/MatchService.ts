@@ -40,8 +40,16 @@ export default class MatchService {
       }],
     });
 
-    console.log(allMatches);
-
     return { status: 'SUCCESSFUL', data: allMatches };
+  }
+
+  public async finishMatch(id: number): Promise<ServiceResponse<{ message: string }>> {
+    const response = await this.matchModel.update({
+      inProgress: false,
+    }, {
+      where: { id },
+    });
+    console.log(response);
+    return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
   }
 }
