@@ -61,7 +61,7 @@ export default class MatchController {
   }
 
   public async getLeaderBoard(req: Request, res: Response) {
-    const serviceResponse = await this.matchService.teamsLeaderBoard();
+    const serviceResponse = await this.matchService.getLeaderboardScore();
 
     return res.status(200).json(serviceResponse);
   }
