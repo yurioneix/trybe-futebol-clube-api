@@ -60,9 +60,15 @@ export default class MatchController {
     return res.status(201).json(serviceResponse.data);
   }
 
-  public async getLeaderBoard(req: Request, res: Response) {
+  public async getLeaderBoard(_req: Request, res: Response) {
     const serviceResponse = await this.matchService.getLeaderboardScore();
 
     return res.status(200).json(serviceResponse);
+  }
+
+  public async getUpdatedLeaderboard(req: Request, res: Response) {
+    const serviceResponse = await this.matchService.updateLeaderboard();
+
+    res.status(200).json(serviceResponse);
   }
 }

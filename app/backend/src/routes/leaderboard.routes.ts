@@ -7,6 +7,7 @@ const matchController = new MatchController(matchService);
 
 const router = Router();
 
-router.get('/home', (req: Request, res: Response) => matchController.getLeaderBoard(req, res));
+router.get('/home', (req: Request, res: Response) => matchController
+  .getUpdatedLeaderboard(req, res));
 
 export default router;

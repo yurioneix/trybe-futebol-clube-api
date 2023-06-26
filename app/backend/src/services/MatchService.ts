@@ -1,3 +1,5 @@
+import calculateTeamGoalsBalance from '../utils/calculateTeamsGoalsBalance';
+import calculateTeamEfficiency from '../utils/calculateTeamsEfficiency';
 import TeamModel from '../database/models/TeamModel';
 import { IMatchTeams, IMatch } from '../Interfaces/IMatch';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
@@ -5,6 +7,8 @@ import MatchModel from '../database/models/MatchModel';
 import ILeaderboard from '../Interfaces/ILeaderboard';
 import calculateTeamGoals from '../utils/calculateTeamGoals';
 import calculateTeamScore from '../utils/calculateTeamScore';
+import iLeaderboardWithEfficiency from '../Interfaces/ILeaderboardWithGoalsBalanceAndEfficiency';
+import sortLeaderboard from '../utils/sortLeadeboard';
 
 export default class MatchService {
   constructor(
@@ -44,6 +48,24 @@ export default class MatchService {
     });
 
     return { status: 'SUCCESSFUL', data: allMatches };
+  }
+
+  public async getFinishedMatches(): Promise<IMatch[]> {
+    const allMatches = await this.matchModel.findAll({
+      where: { inProgress: false },
+      include: [{
+        model: TeamModel,
+        as: 'homeTeam',
+        attributes: ['teamName'],
+      },
+      {
+        model: TeamModel,
+        as: 'awayTeam',
+        attributes: ['teamName'],
+      }],
+    });
+
+    return allMatches;
   }
 
   public async finishMatch(id: number): Promise<ServiceResponse<{ message: string }>> {
@@ -114,7 +136,7 @@ export default class MatchService {
 
   public async getAllMatches(): Promise<IMatchTeams[][]> {
     const teams = await TeamModel.findAll();
-    const matches = await this.getMatches() as unknown as IMatchTeams[];
+    const matches = await this.getFinishedMatches() as unknown as IMatchTeams[];
     const allTeams = teams.map((team) => matches.filter((match) => match.homeTeamId === team.id));
 
     return allTeams;
@@ -127,5 +149,18 @@ export default class MatchService {
       const score = calculateTeamScore(team, leaderboard);
       return score;
     });
+  }
+
+  public async updateLeaderboard(): Promise<iLeaderboardWithEfficiency[]> {
+    const leaderboard = await this.getLeaderboardScore();
+
+    const updatedLeaderBoard = leaderboard.map((team) => {
+      const leaderboardWithGoalsBalance = calculateTeamGoalsBalance(team);
+      const leaderboardWithEfficiency = calculateTeamEfficiency(leaderboardWithGoalsBalance);
+      return leaderboardWithEfficiency;
+    });
+    const sortedLeaderboard = sortLeaderboard(updatedLeaderBoard);
+
+    return sortedLeaderboard;
   }
 }
